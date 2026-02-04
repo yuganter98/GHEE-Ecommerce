@@ -13,6 +13,8 @@ export const metadata: Metadata = {
     metadataBase: new URL('http://localhost:3000'),
 };
 
+import { Footer } from '@/components/layout/Footer';
+import { FloatingCart } from '@/components/layout/FloatingCart';
 import { Navbar } from '@/components/layout/Navbar';
 // ... imports
 
