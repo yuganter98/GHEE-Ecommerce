@@ -6,7 +6,55 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
-// ... faqs array ...
+const faqs = [
+    {
+        category: "Product & Purity",
+        questions: [
+            {
+                q: "Is your ghee 100% pure?",
+                a: "Yes! Our ghee is made from the milk of free-range Gir cows using the traditional wooden Bilona method. It contains zero preservatives, additives, or chemicals."
+            },
+            {
+                q: "What is the Bilona method?",
+                a: "Bilona is an ancient Vedic method where curd is hand-churned (two-way) to extract butter, which is then slow-boiled to make ghee. This retains more nutrients compared to modern cream-based machine processing."
+            },
+            {
+                q: "Does it contain lactose?",
+                a: "The clarification process removes almost all milk solids, including lactose and casein. However, if you have severe allergies, please consult your doctor."
+            }
+        ]
+    },
+    {
+        category: "Ordering & Shipping",
+        questions: [
+            {
+                q: "How long does delivery take?",
+                a: "We process orders within 24 hours. Delivery typically takes 2-4 days for metro cities and 5-7 days for other locations."
+            },
+            {
+                q: "Do you offer Cash on Delivery (COD)?",
+                a: "Yes, we offer COD for most pin codes in India."
+            },
+            {
+                q: "Can I return the product?",
+                a: "Due to the nature of food products, we only accept returns if the jar arrives damaged or broken. Please refer to our Refund Policy for details."
+            }
+        ]
+    },
+    {
+        category: "Storage & Shelf Life",
+        questions: [
+            {
+                q: "Does ghee expire?",
+                a: "Pure ghee has a very long shelf life. It is best before 12 months from the date of manufacture when stored in a cool, dry place."
+            },
+            {
+                q: "Should I refrigerate it?",
+                a: "No, refrigeration is not necessary. Just ensure you use a clean, dry spoon every time to prevent moisture contamination."
+            }
+        ]
+    }
+];
 
 export default function FAQPage() {
     return (
