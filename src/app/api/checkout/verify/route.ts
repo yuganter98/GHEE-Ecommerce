@@ -62,6 +62,8 @@ export async function POST(req: Request) {
                         orderId: order.id,
                         customerName: order.customer_details.name,
                         customerEmail: order.customer_details.email,
+                        customerPhone: order.customer_details.phone,
+                        customerAddress: order.customer_details.address,
                         totalAmount: order.amount,
                         items: itemsRes.rows,
                         paymentMethod: 'ONLINE (Razorpay Verified)'
