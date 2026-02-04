@@ -28,6 +28,7 @@ export function Navbar() {
     const cartCount = mounted ? items.reduce((acc, item) => acc + item.quantity, 0) : 0;
 
     const navLinks = [
+        { name: 'Home', href: '/' },
         { name: 'Shop', href: '/shop' },
         { name: 'Story', href: '/about' },
         { name: 'Process', href: '/#process' },

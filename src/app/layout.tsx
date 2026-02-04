@@ -13,9 +13,7 @@ export const metadata: Metadata = {
     metadataBase: new URL('http://localhost:3000'),
 };
 
-import { Footer } from '@/components/layout/Footer';
-import { FloatingCart } from '@/components/layout/FloatingCart';
-
+import { Navbar } from '@/components/layout/Navbar';
 // ... imports
 
 export default function RootLayout({
@@ -26,6 +24,7 @@ export default function RootLayout({
     return (
         <html lang="en" className={cn(inter.variable, playfair.variable)}>
             <body className="font-sans antialiased min-h-screen flex flex-col">
+                <Navbar />
                 <FloatingCart />
                 {children}
                 <Footer />
