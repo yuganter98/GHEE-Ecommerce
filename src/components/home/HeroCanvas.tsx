@@ -69,7 +69,7 @@ export function HeroCanvas({
                         if (isMounted) setProgress(Math.round((loadedCount / frameCount) * 100));
                         resolve();
                     };
-                    img.onerror = resolve;
+                    img.onerror = () => resolve();
                 });
                 imgs.push(img);
             }
