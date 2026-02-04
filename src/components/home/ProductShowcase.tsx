@@ -24,15 +24,15 @@ export function ProductShowcase() {
                     className="flex-1 relative w-full aspect-square max-w-lg mx-auto"
                 >
                     <div className="absolute inset-0 bg-ghee-500/20 blur-[100px] rounded-full" />
-                    <div className="relative z-10 w-full h-full flex items-center justify-center p-8 bg-white/5 backdrop-blur-sm rounded-full border border-white/10">
+                    <div className="relative z-10 w-full h-full flex items-center justify-center bg-white/5 backdrop-blur-sm rounded-full border border-white/10 overflow-hidden">
                         {/* Placeholder for actual product jar */}
-                        <div className="relative w-64 h-80 transform transition-transform duration-500 hover:scale-105">
+                        <div className="relative w-full h-full transform transition-transform duration-500 hover:scale-105">
                             <Image
                                 src="/images/product-jar.jpg"
                                 alt="Premium Ghee Jar"
                                 fill
-                                className="object-contain drop-shadow-2xl"
-                                sizes="(max-width: 768px) 100vw, 400px"
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 500px"
                             />
                         </div>
                     </div>
