@@ -55,28 +55,34 @@ export function HeroCanvas({
         let loadedCount = 0;
 
         const loadImages = async () => {
-            for (let i = 0; i < frameCount; i++) {
-                if (!isMounted) return;
+            const promises: Promise<HTMLImageElement>[] = [];
 
-                const img = new Image();
+            for (let i = 0; i < frameCount; i++) {
                 const currentFrameIndex = startIndex + (i * frameStep);
                 const paddedIndex = currentFrameIndex.toString().padStart(3, '0');
-                img.src = `${folderPath}/${fileNamePrefix}${paddedIndex}.jpg`;
+                const src = `${folderPath}/${fileNamePrefix}${paddedIndex}.jpg`;
 
-                await new Promise<void>((resolve) => {
+                const p = new Promise<HTMLImageElement>((resolve) => {
+                    const img = new Image();
                     img.onload = () => {
                         loadedCount++;
                         if (isMounted) setProgress(Math.round((loadedCount / frameCount) * 100));
-                        resolve();
+                        resolve(img);
                     };
-                    img.onerror = () => resolve();
+                    img.onerror = () => resolve(img); // Resolve anyway to keep index alignment
+                    img.src = src; // Start loading
                 });
-                imgs.push(img);
+                promises.push(p);
             }
 
-            if (isMounted) {
-                setImages(imgs);
-                setIsLoaded(true);
+            try {
+                const loadedImgs = await Promise.all(promises);
+                if (isMounted) {
+                    setImages(loadedImgs);
+                    setIsLoaded(true);
+                }
+            } catch (e) {
+                console.error("Failed to load hero visuals", e);
             }
         };
 
