@@ -1,8 +1,9 @@
 'use client';
 
 import { Section } from '@/components/ui/section';
-import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Mail, MapPin, Phone, Send, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function ContactPage() {
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
@@ -19,7 +20,15 @@ export default function ContactPage() {
     return (
         <main className="min-h-screen bg-ghee-50/30">
             {/* Header */}
-            <div className="bg-ghee-900 text-white py-24 text-center">
+            <div className="bg-ghee-900 text-white py-24 text-center relative">
+                <div className="absolute top-6 left-6 z-50">
+                    <Link href="/" className="flex items-center gap-2 text-white/80 hover:text-white transition-colors group">
+                        <div className="p-2 rounded-full bg-white/10 backdrop-blur-md group-hover:bg-white/20 transition-all">
+                            <ArrowLeft size={20} />
+                        </div>
+                        <span className="font-medium">Back to Home</span>
+                    </Link>
+                </div>
                 <h1 className="text-4xl md:text-6xl font-serif font-bold mb-4">Get in Touch</h1>
                 <p className="text-ghee-200 text-lg">We'd love to hear from you. Queries, feedback, or just a hello.</p>
             </div>

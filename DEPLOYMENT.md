@@ -1,111 +1,72 @@
-# Deployment Guide
+# Deployment Guide for Ghee Ecommerce
 
-Your project is ready to be deployed to **Vercel** (the creators of Next.js). 
+Your project is fully configured and ready to be deployed to **Vercel**. 
 
-## 1. Will the Hero Section work?
-**YES.** I checked your `public/gheee-jpg` folder:
-- **Total Size**: ~7.6 MB
-- **File Count**: 178 images
-This is well within Vercel's limits. These images will be served via Vercel's Global CDN, so they will load *faster* for users than they do on your local machine.
+Since you have already migrated your database to Supabase and pushed your code to GitHub, the deployment process is straightforward.
 
----
-
-## 2. ⚠️ CRITICAL: Database Migration
-Currently, your `.env.local` points to a **Local Database**:
-`DATABASE_URL="postgres://postgres:123@127.0.0.1:5432/ghee_db"`
-
-This **WILL NOT WORK** when deployed, because Vercel cannot access your computer's hard drive. You must use a **Cloud Database**.
-
-### Recommended: Neon.tech (Free Tier is excellent)
-1.  Go to [Neon.tech](https://neon.tech) and Sign Up.
-2.  Create a new Project (e.g., `ghee-prod`).
-3.  Copy the connection string (matches `postgres://...`).
-
-### How to Migrate your Data
-You need to create the tables in the new Cloud Database. You can use the scripts we already wrote.
-
-1.  **Update `.env.local` TEMPORARILY** to point to the **NEW** Cloud DB URL.
-2.  Run the schema setup script:
-    ```bash
-    # (We didn't make a single master script, so run SQL manually or use a migration tool)
-    # The easiest way right now is to connect to Neon/Supabase SQL Editor and run your schema SQL.
-    ```
-    *I will provide the full SQL Schema below for you to copy-paste into Neon's SQL Editor.*
+## 1. Prerequisites Checklist
+- [x] **Database**: Supabase (Configured & Migrated)
+- [x] **Code**: Pushed to GitHub
+- [x] **Images**: Cloudinary (Configured)
+- [x] **Payments**: Razorpay (Live Keys Configured)
 
 ---
 
-## 3. Deployment Steps (Vercel)
+## 2. Deploy on Vercel
 
-1.  **Push code to GitHub** (if not already done).
-2.  Go to [Vercel.com](https://vercel.com) -> "Add New..." -> "Project".
-3.  Import your GitHub Repository.
-4.  **Configure Environment Variables**:
-    You must add all these variables in the Vercel Dashboard during setup:
+1.  **Go to [Vercel.com](https://vercel.com)** and Log In / Sign Up.
+2.  Click **"Add New..."** -> **"Project"**.
+3.  **Import Git Repository**: Select your repo `GHEE-Ecommerce`.
+4.  **Configure Project**:
+    *   **Framework Preset**: Next.js (Default)
+    *   **Root Directory**: `./` (Default)
+    *   **Build Command**: `next build` (Default)
     
-    | Variable | Value |
-    | :--- | :--- |
-    | `DATABASE_URL` | **(Your NEW Cloud DB URL)** |
-    | `NEXT_PUBLIC_APP_URL` | `https://your-project.vercel.app` (Automatic) |
-    | `NODE_ENV` | `production` |
-    | `RAZORPAY_KEY_ID` | (Your Key) |
-    | `RAZORPAY_KEY_SECRET` | (Your Secret) |
-    | `RAZORPAY_WEBHOOK_SECRET`| (Your Webhook Secret) |
-    | `SMTP_HOST` | `smtp.gmail.com` |
-    | `SMTP_user`, `SMTP_PASS` | (Your Gmail App Password) |
-    | `CLOUDINARY_*` | (Your Cloudinary Keys) |
-    | `ADMIN_EMAIL` | `kravelabco@gmail.com` |
-    | `ADMIN_PASSWORD_HASH` | (Your Hash) |
+5.  **Environment Variables (CRITICAL step)**:
+    You typically copy these directly from your local `.env.local` file.
+    Expand the "Environment Variables" section and add the following:
 
-5.  Click **Deploy**.
+    | Variable Name | Value Description |
+    | :--- | :--- |
+    | **Database** | |
+    | `DATABASE_URL` | Copy from `.env.local` (starts with `postgresql://...`) |
+    | **App Config** | |
+    | `NODE_ENV` | `production` |
+    | `NEXT_PUBLIC_APP_URL` | `https://your-project-name.vercel.app` (or your custom domain) |
+    | **Payments (Razorpay)** | |
+    | `RAZORPAY_KEY_ID` | Copy from `.env.local` |
+    | `RAZORPAY_KEY_SECRET` | Copy from `.env.local` |
+    | `RAZORPAY_WEBHOOK_SECRET`| Copy from `.env.local` |
+    | **Images (Cloudinary)** | |
+    | `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | `dbesx6ijh` |
+    | `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`| `ml_default` |
+    | `CLOUDINARY_API_KEY` | Copy from `.env.local` |
+    | `CLOUDINARY_API_SECRET` | Copy from `.env.local` |
+    | **Email (SMTP)** | |
+    | `SMTP_HOST` | `smtp.gmail.com` |
+    | `SMTP_PORT` | `587` |
+    | `SMTP_USER` | `kravelabco@gmail.com` |
+    | `SMTP_PASS` | Copy from `.env.local` (Your App Password) |
+    | `SMTP_FROM` | `orders@gheestore.com` |
+    | **Admin Security** | |
+    | `ADMIN_EMAIL` | `kravelabco@gmail.com` |
+    | `ADMIN_PASSWORD_HASH` | Copy from `.env.local` (The long string starting with `0544...`) |
+
+6.  Click **Deploy**.
 
 ---
 
-## Appendix: Full Database Schema (Run this in Neon SQL Editor)
+## 3. Post-Deployment Checks
 
-```sql
--- 1. Users / Customers (Optional, mostly handled in Orders json now)
-CREATE TABLE IF NOT EXISTS users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password_hash VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+1.  **Visit your live URL** (e.g., `https://ghee-store.vercel.app`).
+2.  **Test the Shop**: Ensure images load (Cloudinary).
+3.  **Test Admin Login**: Go to `/admin/login` and try `vip#321`.
+4.  **Test Checkout**: Try to buy a product (Refund it later via Razorpay Dashboard if testing with real money).
 
--- 2. Products
-CREATE TABLE IF NOT EXISTS products (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  slug TEXT UNIQUE NOT NULL,
-  description TEXT,
-  price INTEGER NOT NULL, -- Stored in paise (e.g. 1000 = ₹10)
-  image_url TEXT,
-  stock INTEGER DEFAULT 0,
-  is_active BOOLEAN DEFAULT TRUE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- 3. Orders
-CREATE TABLE IF NOT EXISTS orders (
-  id SERIAL PRIMARY KEY,
-  amount INTEGER NOT NULL, -- Total in paise
-  currency VARCHAR(10) DEFAULT 'INR',
-  status VARCHAR(50) DEFAULT 'PENDING', -- PENDING, PAID, SHIPPED, etc.
-  razorpay_order_id VARCHAR(255) UNIQUE,
-  payment_id VARCHAR(255),
-  customer_details JSONB, -- { name, email, phone, address }
-  payment_method VARCHAR(50) DEFAULT 'ONLINE', -- ONLINE or COD
-  tracking_id TEXT,
-  shipped_at TIMESTAMP,
-  delivered_at TIMESTAMP,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- 4. Order Items
-CREATE TABLE IF NOT EXISTS order_items (
-  id SERIAL PRIMARY KEY,
-  order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE,
-  product_id INTEGER REFERENCES products(id),
-  quantity INTEGER NOT NULL,
-  price_at_purchase INTEGER NOT NULL
-);
-```
+## 4. Webhook Setup (Optional but Recommended)
+To automatically update order status to `PAID` even if the user closes the window:
+1.  Go to **Razorpay Dashboard** -> Settings -> Webhooks.
+2.  Add New Webhook.
+3.  **Webhook URL**: `https://YOUR-VERCEL-DOMAIN.vercel.app/api/webhooks/razorpay`
+4.  **Active Events**: `order.paid`, `payment.captured`.
+5.  **Secret**: Use the value of `RAZORPAY_WEBHOOK_SECRET`.

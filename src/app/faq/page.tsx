@@ -3,61 +3,22 @@
 import { Section } from '@/components/ui/section';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Minus } from 'lucide-react';
+import { Plus, Minus, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
-const faqs = [
-    {
-        category: "Product & Purity",
-        questions: [
-            {
-                q: "Is your ghee 100% pure?",
-                a: "Yes! Our ghee is made from the milk of free-range Gir cows using the traditional wooden Bilona method. It contains zero preservatives, additives, or chemicals."
-            },
-            {
-                q: "What is the Bilona method?",
-                a: "Bilona is an ancient Vedic method where curd is hand-churned (two-way) to extract butter, which is then slow-boiled to make ghee. This retains more nutrients compared to modern cream-based machine processing."
-            },
-            {
-                q: "Does it contain lactose?",
-                a: "The clarification process removes almost all milk solids, including lactose and casein. However, if you have severe allergies, please consult your doctor."
-            }
-        ]
-    },
-    {
-        category: "Ordering & Shipping",
-        questions: [
-            {
-                q: "How long does delivery take?",
-                a: "We process orders within 24 hours. Delivery typically takes 2-4 days for metro cities and 5-7 days for other locations."
-            },
-            {
-                q: "Do you offer Cash on Delivery (COD)?",
-                a: "Yes, we offer COD for most pin codes in India."
-            },
-            {
-                q: "Can I return the product?",
-                a: "Due to the nature of food products, we only accept returns if the jar arrives damaged or broken. Please refer to our Refund Policy for details."
-            }
-        ]
-    },
-    {
-        category: "Storage & Shelf Life",
-        questions: [
-            {
-                q: "Does ghee expire?",
-                a: "Pure ghee has a very long shelf life. It is best before 12 months from the date of manufacture when stored in a cool, dry place."
-            },
-            {
-                q: "Should I refrigerate it?",
-                a: "No, refrigeration is not necessary. Just ensure you use a clean, dry spoon every time to prevent moisture contamination."
-            }
-        ]
-    }
-];
+// ... faqs array ...
 
 export default function FAQPage() {
     return (
-        <main className="min-h-screen bg-white pt-20 pb-20">
+        <main className="min-h-screen bg-white pt-20 pb-20 relative">
+            <div className="absolute top-6 left-6 z-50">
+                <Link href="/" className="flex items-center gap-2 text-ghee-900/80 hover:text-ghee-900 transition-colors group">
+                    <div className="p-2 rounded-full bg-ghee-900/5 backdrop-blur-md group-hover:bg-ghee-900/10 transition-all">
+                        <ArrowLeft size={20} />
+                    </div>
+                    <span className="font-medium">Back to Home</span>
+                </Link>
+            </div>
             <Section className="max-w-4xl mx-auto px-4">
                 <header className="text-center mb-16">
                     <h1 className="text-4xl md:text-5xl font-serif font-bold text-ghee-900 mb-4">

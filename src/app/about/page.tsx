@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Section } from '@/components/ui/section';
-import { Heart, Sun, Leaf } from 'lucide-react';
+import { Heart, Sun, Leaf, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 export const dynamic = 'force-static';
 
@@ -9,6 +10,14 @@ export default function AboutPage() {
         <main className="min-h-screen bg-white">
             {/* Hero Section */}
             <div className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+                <div className="absolute top-6 left-6 z-50">
+                    <Link href="/" className="flex items-center gap-2 text-white/80 hover:text-white transition-colors group">
+                        <div className="p-2 rounded-full bg-white/10 backdrop-blur-md group-hover:bg-white/20 transition-all">
+                            <ArrowLeft size={20} />
+                        </div>
+                        <span className="font-medium">Back to Home</span>
+                    </Link>
+                </div>
                 <Image
                     src="/images/hero-bg.png"
                     alt="Traditional Ghee Making"

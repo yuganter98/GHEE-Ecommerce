@@ -1,8 +1,18 @@
 import { Section } from '@/components/ui/section';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 
 export default function ShippingPage() {
     return (
-        <main className="bg-white min-h-screen pt-20 pb-20">
+        <main className="bg-white min-h-screen pt-20 pb-20 relative">
+            <div className="absolute top-6 left-6 z-50">
+                <Link href="/" className="flex items-center gap-2 text-ghee-900/80 hover:text-ghee-900 transition-colors group">
+                    <div className="p-2 rounded-full bg-ghee-900/5 backdrop-blur-md group-hover:bg-ghee-900/10 transition-all">
+                        <ArrowLeft size={20} />
+                    </div>
+                    <span className="font-medium">Back to Home</span>
+                </Link>
+            </div>
             <Section className="max-w-4xl mx-auto px-4">
                 <h1 className="text-4xl md:text-5xl font-serif font-bold text-ghee-900 mb-12 text-center">Shipping Policy</h1>
 
