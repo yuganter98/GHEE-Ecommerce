@@ -58,7 +58,7 @@ export async function POST(req: Request) {
         const orderItemsData = [];
 
         for (const item of items) {
-            const product = products.find(p => p.id === item.id);
+            const product = products.find((p: any) => p.id === item.id);
             if (!product) continue;
 
             if (item.quantity > product.stock) {
