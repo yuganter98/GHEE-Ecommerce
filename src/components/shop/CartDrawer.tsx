@@ -46,7 +46,7 @@ export function CartDrawer() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={closeCart}
-                        className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm"
+                        className="fixed inset-0 bg-black/50 z-[100] backdrop-blur-sm"
                     />
 
                     {/* Drawer */}
@@ -55,7 +55,7 @@ export function CartDrawer() {
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 20 }}
-                        className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col"
+                        className="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-[100] flex flex-col"
                     >
                         <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-ghee-50">
                             <h2 className="font-serif text-2xl font-bold text-ghee-900 flex items-center gap-2">
