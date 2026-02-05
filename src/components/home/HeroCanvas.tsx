@@ -90,30 +90,35 @@ export function HeroCanvas({
         return () => { isMounted = false; };
     }, [folderPath, frameCount, fileNamePrefix, startIndex, frameStep]);
 
-    // 3. Render Loop
+    // 3. Render Loop (Auto-Play)
     useEffect(() => {
         if (!isLoaded || images.length === 0) return;
 
-        const render = () => {
+        let lastTime = performance.now();
+        const fps = 30; // Target FPS
+        const interval = 1000 / fps;
+        let accumulator = 0;
+
+        const render = (time: number) => {
             if (!canvasRef.current || !isInView) {
                 renderLoopId.current = requestAnimationFrame(render);
                 return;
             }
 
-            // Interpolation (Lerp) for smoothness
-            // "Scrub" feel: Lower factor (0.05-0.1) = heavier weight, smoother. 
-            // Higher (0.3+) = snappier.
-            const ease = 0.15;
-            const diff = targetIndex.current - currentIndex.current;
+            const deltaTime = time - lastTime;
+            lastTime = time;
+            accumulator += deltaTime;
 
-            // If efficiently close, snap to target
-            if (Math.abs(diff) < 0.05) {
-                currentIndex.current = targetIndex.current;
-            } else {
-                currentIndex.current += diff * ease;
+            // Update frame if enough time has passed
+            if (accumulator >= interval) {
+                // Advance frame
+                let nextFrame = currentIndex.current + 1;
+                if (nextFrame >= frameCount) nextFrame = 0; // Loop
+                currentIndex.current = nextFrame;
+                accumulator -= interval;
             }
 
-            const frameToDraw = Math.round(currentIndex.current);
+            const frameToDraw = Math.floor(currentIndex.current);
 
             // Only draw if changed
             if (frameToDraw !== lastDrawnIndex.current) {
@@ -148,7 +153,7 @@ export function HeroCanvas({
         return () => {
             if (renderLoopId.current) cancelAnimationFrame(renderLoopId.current);
         };
-    }, [isLoaded, isInView, images]);
+    }, [isLoaded, isInView, images, frameCount]);
 
     return (
         <div ref={containerRef} className={`relative w-full h-full overflow-hidden bg-ghee-900 ${className}`}>
