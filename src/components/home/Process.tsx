@@ -8,8 +8,8 @@ import { Milk, Activity, Flame, PackageCheck, Utensils } from 'lucide-react';
 const steps = [
     {
         id: 1,
-        title: "A2 Milk Collection",
-        desc: "Fresh milk from free-range Gir cows is collected daily.",
+        title: "Pure Milk Collection",
+        desc: "Fresh, nutrient-rich milk from free-range buffaloes is collected daily.",
         icon: Milk,
         color: "bg-blue-100 text-blue-600",
     },

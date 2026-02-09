@@ -53,7 +53,7 @@ export default function AboutPage() {
                             </p>
                             <p>
                                 At <strong>Premium Ghee Co.</strong>, we refuse to take shortcuts. We believe that food carries the energy of how it was made.
-                                That's why our Gir cows roam free, our milk is never processed with chemicals, and every jar is filled with the golden essence of nature.
+                                That's why our cows and buffaloes roam free, our milk is never processed with chemicals, and every jar is filled with the golden essence of nature.
                             </p>
                         </div>
                     </div>
@@ -73,7 +73,7 @@ export default function AboutPage() {
                             </div>
                             <h3 className="text-xl font-serif font-bold text-ghee-900 mb-4">100% Organic</h3>
                             <p className="text-gray-600">
-                                Sourced from free-grazing cows living on chemical-free pastures. No hormones, no antibiotics.
+                                Sourced from free-grazing cows & buffaloes living on chemical-free pastures. No hormones, no antibiotics.
                             </p>
                         </div>
                         <div className="p-8 rounded-2xl bg-ghee-50/50 border border-ghee-100 hover:shadow-lg transition-shadow">

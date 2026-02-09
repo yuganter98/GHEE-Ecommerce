@@ -56,7 +56,7 @@ export function Hero() {
                     </motion.h1>
 
                     <motion.p variants={item} className="text-lg md:text-2xl text-ghee-100/80 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-                        Hand-churned, Bilona method A2 Ghee. <br className="hidden md:block" />
+                        Hand-churned, Bilona method Pure Ghee. <br className="hidden md:block" />
                         Rooted in tradition, crafted for your health.
                     </motion.p>
 

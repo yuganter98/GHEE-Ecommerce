@@ -107,7 +107,15 @@ export function HeroCanvas({
 
             const deltaTime = time - lastTime;
             lastTime = time;
-            accumulator += deltaTime;
+
+            // Fix for "catch-up" effect when switching tabs:
+            // If delta is too large (e.g. > 100ms), clamp it to the interval
+            // so we don't try to play 1000 frames in 1 second.
+            if (deltaTime > 100) {
+                accumulator += interval;
+            } else {
+                accumulator += deltaTime;
+            }
 
             // Update frame if enough time has passed
             if (accumulator >= interval) {

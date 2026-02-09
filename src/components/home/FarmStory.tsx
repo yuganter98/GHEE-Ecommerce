@@ -64,10 +64,10 @@ export function FarmStory() {
 
             <div ref={contentRef} className="relative z-10 container text-center max-w-3xl px-4">
                 <h2 className="text-4xl md:text-6xl font-serif font-bold mb-6 text-ghee-100">
-                    Happy Cows, <br />Humble Beginnings
+                    Happy Herd, <br />Humble Beginnings
                 </h2>
                 <p className="text-lg md:text-xl text-ghee-50/90 leading-relaxed">
-                    Our Gir cows graze freely on lush, organic pastures.
+                    Our cows and buffaloes graze freely on lush, organic pastures.
                     We believe that the purity of the ghee begins with the happiness of the herd.
                     No hormones, no stress—just nature’s rhythm.
                 </p>
