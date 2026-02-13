@@ -45,7 +45,18 @@ async function getStats() {
     }
 }
 
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+
 export default async function AdminDashboard() {
+    // Defense in Depth: Verify session at page level
+    const cookieStore = await cookies();
+    const adminSession = cookieStore.get('admin_session');
+
+    if (!adminSession || adminSession.value !== 'true') {
+        redirect('/admin/login');
+    }
+
     const stats = await getStats();
 
     const formatCurrency = (amount: number) => {
