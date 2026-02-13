@@ -1,8 +1,18 @@
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { ProductForm } from '@/components/admin/ProductForm';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
-export default function NewProductPage() {
+export default async function NewProductPage() {
+    // Defense in Depth: Verify session at page level
+    const cookieStore = await cookies();
+    const adminSession = cookieStore.get('admin_session');
+
+    if (!adminSession || adminSession.value !== 'true') {
+        redirect('/admin/login');
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 pb-20">
             <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">

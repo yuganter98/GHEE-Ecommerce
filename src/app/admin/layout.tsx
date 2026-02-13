@@ -18,16 +18,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         : 'text-gray-600 hover:bg-gray-100';
 
     const handleLogout = async () => {
-        // Clear cookie manually or hit an endpoint if exists
-        // Since we used HttpOnly cookie, we usually need an endpoint to clear it.
-        // For now, simpler to just redirect to login which handles auth check.
-        // Or strictly: document.cookie = "admin_session=; Max-Age=0; path=/";
-        // But since it's HttpOnly, client JS can't clear it. 
-        // We really need a /api/admin/logout endpoint or just let the cookie expire.
-        // For this phase, just redirecting to home or login is fine, 
-        // but to "logout" securely we need the API. 
-        // Let's adding a simple client-side redirection for now.
-        router.push('/admin/login');
+        try {
+            await fetch('/api/admin/logout', { method: 'POST' });
+            router.push('/admin/login');
+            router.refresh(); // Clear client cache
+        } catch (error) {
+            console.error('Logout failed', error);
+        }
     };
 
     return (
@@ -70,6 +67,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             <a href="/" target="_blank" className="text-gray-500 hover:text-gray-900 flex items-center gap-2 text-sm font-medium">
                                 <Store size={18} /> <span className="hidden sm:inline">View Store</span>
                             </a>
+                            <button
+                                onClick={handleLogout}
+                                className="text-red-600 hover:bg-red-50 px-3 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
+                            >
+                                <LogOut size={18} /> <span className="hidden sm:inline">Logout</span>
+                            </button>
                         </div>
                     </div>
                 </div>

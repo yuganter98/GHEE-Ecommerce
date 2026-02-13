@@ -23,7 +23,7 @@ export function Footer() {
                             </div>
                         </Link>
                         <p className="text-ghee-200/80 text-sm leading-relaxed">
-                            Crafting the purest Bilona Ghee with traditional methods and happy cows. Bringing the golden essence of health to your kitchen.
+                            Crafting the purest Bilona Ghee with traditional methods and happy cows and buffaloes. Bringing the golden essence of health to your kitchen.
                         </p>
                         <div className="flex gap-4 pt-2">
                             <a href="https://www.instagram.com/kravelab.in?igsh=bm5rY2Y1ajRzczN0" target="_blank" rel="noopener noreferrer" className="text-ghee-300 hover:text-white transition-colors"><Instagram size={20} /></a>
@@ -76,7 +76,7 @@ export function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="border-t border-ghee-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-ghee-400">
-                    <p>&copy; {new Date().getFullYear()} Premium Ghee Co. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} kravelab.in. All rights reserved.</p>
                     <div className="flex gap-6">
                         <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
                         <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>

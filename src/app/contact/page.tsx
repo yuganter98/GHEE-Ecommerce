@@ -49,9 +49,9 @@ export default function ContactPage() {
                                         <div>
                                             <p className="font-bold text-gray-900">Farm Location</p>
                                             <p className="text-gray-600 text-sm mt-1">
-                                                Premium Ghee Co. Farm<br />
-                                                Near Gir National Park<br />
-                                                Gujarat, India - 362135
+                                                Kravelab Food, Radha Keli Kunj<br />
+                                                Village- Dhodhsar<br />
+                                                Jaipur Rajasthan 303712
                                             </p>
                                         </div>
                                     </li>
@@ -70,7 +70,7 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <p className="font-bold text-gray-900">Email</p>
-                                            <p className="text-gray-600 text-sm mt-1">hello@premiumghee.com</p>
+                                            <p className="text-gray-600 text-sm mt-1">kravelabco@gmail.com</p>
                                         </div>
                                     </li>
                                 </ul>
