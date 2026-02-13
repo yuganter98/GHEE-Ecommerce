@@ -8,9 +8,21 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'sw
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair', display: 'swap' });
 
 export const metadata: Metadata = {
-    title: 'Premium Ghee | Pure Golden Goodness',
-    description: 'Hand-crafted, artisanal ghee for the discerning palate.',
-    metadataBase: new URL('http://localhost:3000'),
+    title: {
+        default: 'Kravelab | Pure A2 Bilona Ghee',
+        template: '%s | Kravelab'
+    },
+    description: 'Experience the purest handcrafted Bilona Ghee from free-grazing cows and buffaloes. Traditional Vedic method, 100% organic and cruelty-free.',
+    metadataBase: new URL('https://www.kravelab.in'),
+    keywords: ['A2 Ghee', 'Bilona Ghee', 'Organic Ghee', 'Buffalo Ghee', 'Desi Ghee', 'Kravelab', 'Pure Ghee'],
+    openGraph: {
+        title: 'Kravelab | Pure A2 Bilona Ghee',
+        description: 'Authentic Vedic Bilona Ghee. Handcrafted details, pure taste.',
+        url: 'https://www.kravelab.in',
+        siteName: 'Kravelab',
+        locale: 'en_IN',
+        type: 'website',
+    },
 };
 
 import { Footer } from '@/components/layout/Footer';

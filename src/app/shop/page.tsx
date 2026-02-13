@@ -24,6 +24,13 @@ async function getProducts() {
     }
 }
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Shop Premium Ghee',
+    description: 'Buy pure A2 Bilona Ghee online from Kravelab. 100% Organic, Cruelty-Free, and Freshly Made.',
+};
+
 export default async function ShopPage() {
     const products = await getProducts();
 

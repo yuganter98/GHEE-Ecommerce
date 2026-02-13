@@ -3,6 +3,13 @@ import { Section } from '@/components/ui/section';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Our Craft | Traditional Bilona Method',
+    description: 'Learn how we make our ghee using the ancient Vedic Bilona method. Slow-cooked, hand-churned, and pure.',
+};
+
 export default function ProcessPage() {
     return (
         <main className="bg-white min-h-screen pt-20">

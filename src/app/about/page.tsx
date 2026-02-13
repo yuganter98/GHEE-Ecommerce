@@ -1,9 +1,15 @@
 import Image from 'next/image';
 import { Section } from '@/components/ui/section';
+import type { Metadata } from 'next';
 import { Heart, Sun, Leaf, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export const dynamic = 'force-static';
+
+export const metadata: Metadata = {
+    title: 'Our Story',
+    description: 'The legacy of Kravelab. From humble beginnings to your kitchen, discover our journey of preserving the traditional Bilona method.',
+};
 
 export default function AboutPage() {
     return (
