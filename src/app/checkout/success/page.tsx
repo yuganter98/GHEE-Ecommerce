@@ -1,13 +1,23 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useCartStore } from '@/store/cart';
 
 function SuccessContent() {
     const searchParams = useSearchParams();
     const orderId = searchParams.get('orderId');
+    const shouldClearCart = searchParams.get('clearCart');
+    const { clearCart } = useCartStore();
+
+    // Clear cart when redirected from mobile payment callback
+    useEffect(() => {
+        if (shouldClearCart === 'true') {
+            clearCart();
+        }
+    }, [shouldClearCart, clearCart]);
 
     return (
         <div className="bg-white p-8 md:p-12 rounded-3xl shadow-xl text-center max-w-lg w-full border border-ghee-100">

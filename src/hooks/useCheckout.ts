@@ -61,14 +61,22 @@ export function useCheckout({ onError }: CheckoutOptions = {}) {
             }
 
             // 4. Open Razorpay (Online)
+            // Build the callback URL for mobile redirect
+            const callbackUrl = `${window.location.origin}/api/checkout/callback`;
+
             const options = {
                 key: orderData.key,
                 amount: orderData.amount,
                 currency: orderData.currency,
-                name: 'Ghee Co.',
+                name: 'Kravelab',
                 description: 'Premium Bilona Ghee',
                 order_id: orderData.orderId,
+                // callback_url handles mobile redirects (UPI apps, bank pages)
+                // When Razorpay redirects externally, the handler below won't fire,
+                // so Razorpay will POST to callback_url instead.
+                callback_url: callbackUrl,
                 handler: async function (response: any) {
+                    // This fires on desktop (popup mode) — mobile uses callback_url instead
                     try {
                         const verifyRes = await fetch('/api/checkout/verify', {
                             method: 'POST',
