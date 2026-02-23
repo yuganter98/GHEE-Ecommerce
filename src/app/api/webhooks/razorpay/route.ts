@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { db } from '@/lib/db';
-import { EmailService } from '@/lib/email';
 
 export const dynamic = 'force-dynamic';
 
@@ -83,26 +82,10 @@ export async function POST(req: Request) {
                 }
 
                 await client.query('COMMIT');
-                console.log(`Order ${orderId} marked as PAID.`);
+                console.log(`Order ${orderId} marked as PAID via webhook.`);
 
-                // Trigger Email — MUST await before response on serverless
-                if (order && order.customer_details) {
-                    const customer = order.customer_details; // JSONB
-                    try {
-                        await EmailService.sendOrderConfirmation({
-                            orderId: order.id,
-                            customerName: customer.name,
-                            customerEmail: customer.email,
-                            customerPhone: customer.phone,
-                            customerAddress: customer.address,
-                            totalAmount: order.amount,
-                            items: itemsRes.rows,
-                            paymentMethod: 'ONLINE (Razorpay)'
-                        });
-                    } catch (emailErr) {
-                        console.error('Email failed but webhook processed:', emailErr);
-                    }
-                }
+                // Note: Email is NOT sent here — it is sent from /api/checkout/verify
+                // which is the client-facing endpoint that always runs after payment.
 
             } catch (e) {
                 await client.query('ROLLBACK');
