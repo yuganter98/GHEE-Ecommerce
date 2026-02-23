@@ -85,19 +85,23 @@ export async function POST(req: Request) {
                 await client.query('COMMIT');
                 console.log(`Order ${orderId} marked as PAID.`);
 
-                // Trigger Email (Non-blocking)
+                // Trigger Email — MUST await before response on serverless
                 if (order && order.customer_details) {
                     const customer = order.customer_details; // JSONB
-                    EmailService.sendOrderConfirmation({
-                        orderId: order.id,
-                        customerName: customer.name,
-                        customerEmail: customer.email,
-                        customerPhone: customer.phone,
-                        customerAddress: customer.address,
-                        totalAmount: order.amount,
-                        items: itemsRes.rows,
-                        paymentMethod: 'ONLINE (Razorpay)'
-                    });
+                    try {
+                        await EmailService.sendOrderConfirmation({
+                            orderId: order.id,
+                            customerName: customer.name,
+                            customerEmail: customer.email,
+                            customerPhone: customer.phone,
+                            customerAddress: customer.address,
+                            totalAmount: order.amount,
+                            items: itemsRes.rows,
+                            paymentMethod: 'ONLINE (Razorpay)'
+                        });
+                    } catch (emailErr) {
+                        console.error('Email failed but webhook processed:', emailErr);
+                    }
                 }
 
             } catch (e) {

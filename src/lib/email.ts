@@ -1,12 +1,18 @@
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.ethereal.email',
+    host: process.env.SMTP_HOST || 'smtp.gmail.com',
     port: Number(process.env.SMTP_PORT) || 587,
+    secure: false, // use STARTTLS
     auth: {
         user: process.env.SMTP_USER || 'user',
         pass: process.env.SMTP_PASS || 'pass',
     },
+    tls: {
+        rejectUnauthorized: false, // Prevents TLS issues on serverless
+    },
+    connectionTimeout: 10000, // 10s timeout
+    greetingTimeout: 10000,
 });
 
 interface OrderItem {
@@ -196,7 +202,7 @@ export const EmailService = {
         try {
             const adminHtml = generateAdminEmailHtml(props);
             await transporter.sendMail({
-                from: process.env.SMTP_FROM || 'orders@gheestore.com',
+                from: process.env.SMTP_FROM || process.env.SMTP_USER || 'noreply@kravelab.in',
                 to: adminEmail,
                 subject: `[New Order] #${orderId} - ₹${(props.totalAmount / 100).toFixed(0)}`,
                 html: adminHtml
@@ -211,7 +217,7 @@ export const EmailService = {
             try {
                 const userHtml = generateOrderEmailHtml(props);
                 await transporter.sendMail({
-                    from: process.env.SMTP_FROM || 'orders@gheestore.com',
+                    from: process.env.SMTP_FROM || process.env.SMTP_USER || 'noreply@kravelab.in',
                     to: customerEmail,
                     subject: `Order Placed! (#${orderId})`,
                     html: userHtml

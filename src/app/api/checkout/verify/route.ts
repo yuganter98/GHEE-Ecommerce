@@ -56,18 +56,22 @@ export async function POST(req: Request) {
 
                 await client.query('COMMIT');
 
-                // 4. Send Email
+                // 4. Send Email — MUST await before response on serverless
                 if (order.customer_details) {
-                    EmailService.sendOrderConfirmation({
-                        orderId: order.id,
-                        customerName: order.customer_details.name,
-                        customerEmail: order.customer_details.email,
-                        customerPhone: order.customer_details.phone,
-                        customerAddress: order.customer_details.address,
-                        totalAmount: order.amount,
-                        items: itemsRes.rows,
-                        paymentMethod: 'ONLINE (Razorpay Verified)'
-                    });
+                    try {
+                        await EmailService.sendOrderConfirmation({
+                            orderId: order.id,
+                            customerName: order.customer_details.name,
+                            customerEmail: order.customer_details.email,
+                            customerPhone: order.customer_details.phone,
+                            customerAddress: order.customer_details.address,
+                            totalAmount: order.amount,
+                            items: itemsRes.rows,
+                            paymentMethod: 'ONLINE (Razorpay Verified)'
+                        });
+                    } catch (emailErr) {
+                        console.error('Email failed but payment verified:', emailErr);
+                    }
                 }
 
                 return NextResponse.json({ success: true, message: 'Payment Verified & Order Updated' });

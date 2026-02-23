@@ -139,17 +139,21 @@ export async function POST(req: Request) {
 
         // 4. Post-Creation Actions
         if (paymentMethod === 'COD') {
-            // Immediate Email for COD
-            EmailService.sendOrderConfirmation({
-                orderId,
-                customerName: customer.name,
-                customerEmail: customer.email || undefined,
-                customerPhone: customer.phone,
-                customerAddress: customer.address,
-                totalAmount,
-                items: orderItemsData,
-                paymentMethod: 'COD'
-            });
+            // Immediate Email for COD — MUST await before response on serverless
+            try {
+                await EmailService.sendOrderConfirmation({
+                    orderId,
+                    customerName: customer.name,
+                    customerEmail: customer.email || undefined,
+                    customerPhone: customer.phone,
+                    customerAddress: customer.address,
+                    totalAmount,
+                    items: orderItemsData,
+                    paymentMethod: 'COD'
+                });
+            } catch (emailErr) {
+                console.error('Email failed but order succeeded:', emailErr);
+            }
 
             return NextResponse.json({
                 success: true,
